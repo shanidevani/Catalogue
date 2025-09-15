@@ -97,22 +97,24 @@ if st.session_state["authenticated"]:
             ]
 
         # ------ short category Filter ------
-        if frame_engine_search!="":
+        category_list = ['All'] + sorted(filtered_df['CAT'].dropna().unique())
+        if len(category_list) == 1:
             category = False
             tab3.markdown("""<span style="font-weight: bold; color: red;">Category not aplicable</span>""" , unsafe_allow_html=True)
         else:
-            category = tab3.selectbox("Select Category (CAT)", ['All'] + sorted(filtered_df['CAT'].dropna().unique()))
+            category = tab3.selectbox("Select Category (CAT)", category_list)
         
         if category != 'All':
             filtered_df = filtered_df[filtered_df['CAT'] == category]
 
         
         # ------ category Filter ------
-        if frame_engine_search!="":
+        category_name_list = ['All'] + sorted(filtered_df['CAT NAME (PT)'].dropna().unique())
+        if len(category_name_list) == 1:
             category_name = False
             tab4.markdown("""<span style="font-weight: bold; color: red;">Category not aplicable</span>""" , unsafe_allow_html=True)
         else:
-            category_name = tab4.selectbox("Select Category", ['All'] + sorted(filtered_df['CAT NAME (PT)'].dropna().unique()))
+            category_name = tab4.selectbox("Select Category", category_name_list)
         
         if category_name != 'All':
             filtered_df = filtered_df[filtered_df['CAT NAME (PT)'] == category_name]
@@ -129,7 +131,10 @@ if st.session_state["authenticated"]:
             filtered_df = filtered_df[filtered_df['SIZE'] == size]
 
         # ------ Front Rear Filter ------
-        front_rear_list = ['All'] + sorted(filtered_df['F/R'].dropna().unique())
+        front_rear_list = ["All"]
+        if frame_engine_search == "":
+            front_rear_list = front_rear_list + sorted(filtered_df['F/R'].dropna().unique())
+
         if len(front_rear_list)==1:
             front_rear = False
             tab6.markdown("""<span style="font-weight: bold; color: red;">F/R (Front/Rear) not aplicable</span>""" , unsafe_allow_html=True)
@@ -141,40 +146,53 @@ if st.session_state["authenticated"]:
 
         tab1, tab2, tab3, tab4, tab5, tab6 = st.columns(6)
         # ------ Left Right Filter ------
-        left_right_list = ['All'] + sorted(filtered_df['L/R'].dropna().unique())
-        if len(left_right_list)>1:
-            left_right = tab1.selectbox("Select L/R (Left/Right)", left_right_list)
-        else:
+        left_right_list = ["All"]
+        if frame_engine_search == "":
+            left_right_list = left_right_list + sorted(filtered_df['L/R'].dropna().unique())
+
+        if len(left_right_list) == 1:
             left_right = False
             tab1.markdown("""<span style="font-weight: bold; color: red;">L/R (Left/Right) not aplicable</span>""" , unsafe_allow_html=True)
+        else:
+            left_right = tab1.selectbox("Select L/R (Left/Right)", left_right_list)
+            
         
         if left_right != "All" and left_right != False:
             filtered_df = filtered_df[filtered_df['L/R'] == left_right]
 
         # ------ Upper Lover Filter ------
-        upper_lover_list = ['All'] + sorted(filtered_df['U/L'].dropna().unique())
-        if len(upper_lover_list)>1:
-            upper_lower = tab2.selectbox("Select U/L (Upper/Lower)", upper_lover_list)
-        else:
+        upper_lover_list = ["All"]
+        if frame_engine_search == "":
+            upper_lover_list = upper_lover_list + sorted(filtered_df['U/L'].dropna().unique())
+
+        if len(upper_lover_list) == 1:
             upper_lower = False
             tab2.markdown("""<span style="font-weight: bold; color: red;">U/L (Upper/Lower) not aplicable</span>""" , unsafe_allow_html=True)
+        else:
+            upper_lower = tab2.selectbox("Select U/L (Upper/Lower)", upper_lover_list)
         
         if upper_lower != "All" and upper_lower != False:
             filtered_df = filtered_df[filtered_df['U/L'] == upper_lower]
 
         # ------ In Out Filter ------
-        in_out_list = ['All'] + sorted(filtered_df['I/O'].dropna().unique())
-        if len(in_out_list)>1:
-            in_out = tab3.selectbox("Select I/O (In/Out))", in_out_list)
-        else:
+        in_out_list = ["All"]
+        if frame_engine_search == "":
+            in_out_list = in_out_list + sorted(filtered_df['I/O'].dropna().unique())
+        
+        if len(in_out_list) == 1:
             in_out = False
             tab3.markdown("""<span style="font-weight: bold; color: red;">I/O (In/Out)) not aplicable</span>""" , unsafe_allow_html=True)
+        else:
+            in_out = tab3.selectbox("Select I/O (In/Out))", in_out_list)
         
         if in_out != "All" and in_out != False:
             filtered_df = filtered_df[filtered_df['I/O'] == in_out]
 
         # ------ Car Filter ------
-        car_list = ['All'] + sorted(filtered_df['CAR'].dropna().unique())
+        car_list = ["All"]
+        if frame_engine_search == "":
+            car_list = car_list + sorted(filtered_df['CAR'].dropna().unique())
+        
         if len(car_list)==1:
             selected_car = False
             tab4.markdown("""<span style="font-weight: bold; color: red;">Car is not aplicable</span>""" , unsafe_allow_html=True)
@@ -185,8 +203,9 @@ if st.session_state["authenticated"]:
             filtered_df = filtered_df[filtered_df['CAR'] == selected_car]
 
         # ------ Car model Filter ------
-        
-        model_list = ['All'] + sorted(filtered_df['MODEL.1'].dropna().unique())
+        model_list = ["All"]
+        if frame_engine_search == "":
+            model_list = model_list + sorted(filtered_df['MODEL.1'].dropna().unique())
 
         if len(model_list)==1:
             selected_model = False
@@ -198,13 +217,15 @@ if st.session_state["authenticated"]:
             filtered_df = filtered_df[filtered_df['MODEL.1'] == selected_model]
 
         # ------ model Year Filter ------
-        all_years = sorted([int(y) for y in set(filtered_df['ANO DE I.'].dropna().unique()) | set(filtered_df['ANO FI.'].dropna().unique())])
-        
-        if len(all_years)>0:
-            selected_year = tab6.selectbox("Select Year", ['All'] + all_years)
-        else:
+        all_years = ["All"]
+        if frame_engine_search == "":
+            all_years = sorted([int(y) for y in set(filtered_df['ANO DE I.'].dropna().unique()) | set(filtered_df['ANO FI.'].dropna().unique())])
+
+        if len(all_years) == 1:
             selected_year = False
             tab6.markdown("""<span style="font-weight: bold; color: red;">Year is not aplicable</span>""" , unsafe_allow_html=True)
+        else:    
+            selected_year = tab6.selectbox("Select Year", ['All'] + all_years)
         
         if selected_year != 'All' and selected_year != False:
             filtered_df = filtered_df[
@@ -337,6 +358,5 @@ if st.session_state["authenticated"]:
 else:
 
     login_page()
-
 
 
