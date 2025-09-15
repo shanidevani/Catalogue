@@ -59,7 +59,7 @@ if st.session_state["authenticated"]:
         # --- Data Loading ---
         try:
             # Use the raw GitHub URL for the CSV file.
-            file_path = "https://raw.githubusercontent.com/shanidevani/Search-Parts/main/M%20APPLICATIONS(FRAM%20ENG).csv"
+            file_path = "https://github.com/shanidevani/Catalogue/blob/main/M%20APPLICATIONS(FRAM%20ENG).csv"
             
             # Read the CSV file with 'latin-1' encoding and skip bad lines.
             df = pd.read_csv(file_path, encoding='latin-1', on_bad_lines='skip')
@@ -236,7 +236,7 @@ if st.session_state["authenticated"]:
             try:
                 # Correct raw URL for the GitHub CSV file.
                 # The URL was changed from the web page URL to the raw content URL.
-                csv_url = "https://raw.githubusercontent.com/shanidevani/service-price/main/final%20service%20data.csv"
+                csv_url = "https://github.com/shanidevani/Catalogue/blob/main/final%20service%20data.csv"
                 df = pd.read_csv(csv_url)
                 print(len(df))
                 print(list(df))
@@ -334,4 +334,5 @@ if st.session_state["authenticated"]:
             # --- Logout button at the bottom of the page
 
 else:
+
     login_page()
