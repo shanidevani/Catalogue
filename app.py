@@ -237,7 +237,7 @@ if st.session_state["authenticated"]:
             try:
                 # Correct raw URL for the GitHub CSV file.
                 # The URL was changed from the web page URL to the raw content URL.
-                csv_url = "https://raw.githubusercontent.com/shanidevani/Catalogue/blob/main/final%20service%20data.csv"
+                csv_url = "https://raw.githubusercontent.com/shanidevani/Catalogue/refs/heads/main/final%20service%20data.csv"
                 df = pd.read_csv(csv_url)
                 print(len(df))
                 print(list(df))
@@ -337,5 +337,6 @@ if st.session_state["authenticated"]:
 else:
 
     login_page()
+
 
 
