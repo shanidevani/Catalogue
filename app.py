@@ -223,7 +223,8 @@ if st.session_state["authenticated"]:
         # --- Display Results ---
         if not filtered_df.empty:
             st.subheader("Filtered Part Numbers:")
-            st.dataframe(filtered_df[['PART NO.','CAT','SIZE','F/R','L/R','U/L','I/O','CAR','MODEL','ANO DE I.','ANO FI.']].reset_index(drop=True), hide_index=True)
+            # st.dataframe(filtered_df[['PART NO.','CAT','SIZE','F/R','L/R','U/L','I/O','CAR','MODEL','ANO DE I.','ANO FI.']].reset_index(drop=True), hide_index=True)
+            st.dataframe(filtered_df[['PART NO.']].reset_index(drop=True), hide_index=True)
         else:
             st.warning("No part numbers found with the selected filters.")
     with col2:
@@ -336,4 +337,5 @@ if st.session_state["authenticated"]:
 else:
 
     login_page()
+
 
