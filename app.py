@@ -86,7 +86,7 @@ if st.session_state["authenticated"]:
         # ------ part Filter ------
         if frame_engine_search!="":
             part_no_search = False
-            tab2.markdown("""<span style="font-weight: bold; color: red;">Part no not aplicable</span>""" , unsafe_allow_html=True)
+            tab2.markdown("""<span style="font-weight: bold; color: red;">Part no not applicable</span>""" , unsafe_allow_html=True)
         else:
             part_no_search = tab2.text_input("Search Part No.")
 
@@ -100,7 +100,7 @@ if st.session_state["authenticated"]:
         category_list = ['All'] + sorted(filtered_df['CAT'].dropna().unique())
         if len(category_list) == 1:
             category = False
-            tab3.markdown("""<span style="font-weight: bold; color: red;">Category not aplicable</span>""" , unsafe_allow_html=True)
+            tab3.markdown("""<span style="font-weight: bold; color: red;">Category not applicable</span>""" , unsafe_allow_html=True)
         else:
             category = tab3.selectbox("Select Category (CAT)", category_list)
         
@@ -112,7 +112,7 @@ if st.session_state["authenticated"]:
         category_name_list = ['All'] + sorted(filtered_df['CAT NAME (PT)'].dropna().unique())
         if len(category_name_list) == 1:
             category_name = False
-            tab4.markdown("""<span style="font-weight: bold; color: red;">Category not aplicable</span>""" , unsafe_allow_html=True)
+            tab4.markdown("""<span style="font-weight: bold; color: red;">Category not applicable</span>""" , unsafe_allow_html=True)
         else:
             category_name = tab4.selectbox("Select Category", category_name_list)
         
@@ -123,7 +123,7 @@ if st.session_state["authenticated"]:
         size_list = ['All'] + sorted(filtered_df['SIZE'].dropna().unique())
         if len(size_list)==1:
             size = False
-            tab5.markdown("""<span style="font-weight: bold; color: red;">Size not aplicable</span>""" , unsafe_allow_html=True)
+            tab5.markdown("""<span style="font-weight: bold; color: red;">Size not applicable</span>""" , unsafe_allow_html=True)
         else:
             size = tab5.selectbox("Select Size", size_list)
 
@@ -137,7 +137,7 @@ if st.session_state["authenticated"]:
 
         if len(front_rear_list)==1:
             front_rear = False
-            tab6.markdown("""<span style="font-weight: bold; color: red;">F/R (Front/Rear) not aplicable</span>""" , unsafe_allow_html=True)
+            tab6.markdown("""<span style="font-weight: bold; color: red;">F/R (Front/Rear) not applicable</span>""" , unsafe_allow_html=True)
         else:
             front_rear = tab6.selectbox("Select F/R (Front/Rear)", front_rear_list)
         
@@ -152,7 +152,7 @@ if st.session_state["authenticated"]:
 
         if len(left_right_list) == 1:
             left_right = False
-            tab1.markdown("""<span style="font-weight: bold; color: red;">L/R (Left/Right) not aplicable</span>""" , unsafe_allow_html=True)
+            tab1.markdown("""<span style="font-weight: bold; color: red;">L/R (Left/Right) not applicable</span>""" , unsafe_allow_html=True)
         else:
             left_right = tab1.selectbox("Select L/R (Left/Right)", left_right_list)
             
@@ -167,7 +167,7 @@ if st.session_state["authenticated"]:
 
         if len(upper_lover_list) == 1:
             upper_lower = False
-            tab2.markdown("""<span style="font-weight: bold; color: red;">U/L (Upper/Lower) not aplicable</span>""" , unsafe_allow_html=True)
+            tab2.markdown("""<span style="font-weight: bold; color: red;">U/L (Upper/Lower) not applicable</span>""" , unsafe_allow_html=True)
         else:
             upper_lower = tab2.selectbox("Select U/L (Upper/Lower)", upper_lover_list)
         
@@ -181,7 +181,7 @@ if st.session_state["authenticated"]:
         
         if len(in_out_list) == 1:
             in_out = False
-            tab3.markdown("""<span style="font-weight: bold; color: red;">I/O (In/Out)) not aplicable</span>""" , unsafe_allow_html=True)
+            tab3.markdown("""<span style="font-weight: bold; color: red;">I/O (In/Out)) not applicable</span>""" , unsafe_allow_html=True)
         else:
             in_out = tab3.selectbox("Select I/O (In/Out))", in_out_list)
         
@@ -195,7 +195,7 @@ if st.session_state["authenticated"]:
         
         if len(car_list)==1:
             selected_car = False
-            tab4.markdown("""<span style="font-weight: bold; color: red;">Car is not aplicable</span>""" , unsafe_allow_html=True)
+            tab4.markdown("""<span style="font-weight: bold; color: red;">Car is not applicable</span>""" , unsafe_allow_html=True)
         else:
             selected_car = tab4.selectbox("Select Car (CAR)", car_list)
 
@@ -209,7 +209,7 @@ if st.session_state["authenticated"]:
 
         if len(model_list)==1:
             selected_model = False
-            tab5.markdown("""<span style="font-weight: bold; color: red;">Car Model is not aplicable</span>""" , unsafe_allow_html=True)
+            tab5.markdown("""<span style="font-weight: bold; color: red;">Car Model is not applicable</span>""" , unsafe_allow_html=True)
         else:
             selected_model = tab5.selectbox("Select Model (MODEL)", model_list)
 
@@ -223,7 +223,7 @@ if st.session_state["authenticated"]:
 
         if len(all_years) == 1:
             selected_year = False
-            tab6.markdown("""<span style="font-weight: bold; color: red;">Year is not aplicable</span>""" , unsafe_allow_html=True)
+            tab6.markdown("""<span style="font-weight: bold; color: red;">Year is not applicable</span>""" , unsafe_allow_html=True)
         else:    
             selected_year = tab6.selectbox("Select Year", ['All'] + all_years)
         
@@ -285,7 +285,7 @@ if st.session_state["authenticated"]:
                 make_options = ['All'] + sorted(list(df['car name'].unique()))
                 if len(make_options)==1:
                     selected_make = False
-                    st.markdown("""<span style="font-weight: bold; color: red;">Make is not aplicable</span>""" , unsafe_allow_html=True)
+                    st.markdown("""<span style="font-weight: bold; color: red;">Make is not applicable</span>""" , unsafe_allow_html=True)
                 else:
                     selected_make = st.selectbox("Select Make", make_options)
 
@@ -300,7 +300,7 @@ if st.session_state["authenticated"]:
                 
                 if len(model_name_options)==1:
                     selected_model_name = False
-                    st.markdown("""<span style="font-weight: bold; color: red;">Model is not aplicable</span>""" , unsafe_allow_html=True)
+                    st.markdown("""<span style="font-weight: bold; color: red;">Model is not applicable</span>""" , unsafe_allow_html=True)
                 else:
                     selected_model_name = st.selectbox("Select Model Name", model_name_options)
 
@@ -313,7 +313,7 @@ if st.session_state["authenticated"]:
                 
                 if len(all_years)==1:
                     selected_year = False
-                    st.markdown("""<span style="font-weight: bold; color: red;">year is not aplicable</span>""" , unsafe_allow_html=True)
+                    st.markdown("""<span style="font-weight: bold; color: red;">year is not applicable</span>""" , unsafe_allow_html=True)
                 else:
                     selected_year = st.selectbox("Select Year", ['All'] + all_years)
 
@@ -328,7 +328,7 @@ if st.session_state["authenticated"]:
                 service_options = ['All'] + sorted(list(filtered_df_step1['service'].unique()))
                 if len(service_options)==1:
                     selected_service = False
-                    st.markdown("""<span style="font-weight: bold; color: red;">year is not aplicable</span>""" , unsafe_allow_html=True)
+                    st.markdown("""<span style="font-weight: bold; color: red;">year is not applicable</span>""" , unsafe_allow_html=True)
                 else:
                     selected_service = st.selectbox("Select Service", service_options)
 
