@@ -73,36 +73,15 @@ if st.session_state["authenticated"]:
 
         filtered_df = df.copy()
         tab1, tab2, tab3, tab4, tab5, tab6 = st.columns(6)
-        
-        # ------ engine Filter ------
-        frame_engine_search = tab1.text_input("Enter Frame No./Engine No.")
-        if frame_engine_search:
-            search_text = frame_engine_search.lower().strip()
-            filtered_df = filtered_df[
-                (filtered_df['FRAME'].astype(str).str.lower().str.contains(search_text, na=False)) |
-                (filtered_df['ENGINE'].astype(str).str.lower().str.contains(search_text, na=False))
-            ]
-
-        # ------ part Filter ------
-        if frame_engine_search!="":
-            part_no_search = False
-            tab2.markdown("""<span style="font-weight: bold; color: red;">Part no not applicable</span>""" , unsafe_allow_html=True)
-        else:
-            part_no_search = tab2.text_input("Search Part No.")
-
-        if part_no_search:
-            search_text = part_no_search.lower().strip()
-            filtered_df = filtered_df[
-                filtered_df['PART NO.'].astype(str).str.lower().str.contains(search_text, na=False)
-            ]
 
         # ------ short category Filter ------
         category_list = ['All'] + sorted(filtered_df['CAT'].dropna().unique())
-        if len(category_list) == 1:
-            category = False
-            tab3.markdown("""<span style="font-weight: bold; color: red;">Category not applicable</span>""" , unsafe_allow_html=True)
-        else:
-            category = tab3.selectbox("Select Category (CAT)", category_list)
+        with tab1:
+            if len(category_list) == 1:
+                category = False
+                st.markdown("""<span style="font-weight: bold; color: red;">Category not applicable</span>""" , unsafe_allow_html=True)
+            else:
+                category = st.selectbox("Select Category (CAT)", category_list)
         
         if category != 'All':
             filtered_df = filtered_df[filtered_df['CAT'] == category]
@@ -110,128 +89,162 @@ if st.session_state["authenticated"]:
         
         # ------ category Filter ------
         category_name_list = ['All'] + sorted(filtered_df['CAT NAME (PT)'].dropna().unique())
-        if len(category_name_list) == 1:
-            category_name = False
-            tab4.markdown("""<span style="font-weight: bold; color: red;">Category not applicable</span>""" , unsafe_allow_html=True)
-        else:
-            category_name = tab4.selectbox("Select Category", category_name_list)
+
+        with tab2:
+            if len(category_name_list) == 1:
+                category_name = False
+                st.markdown("""<span style="font-weight: bold; color: red;">Category not applicable</span>""" , unsafe_allow_html=True)
+            else:
+                category_name = st.selectbox("Select Category", category_name_list)
         
         if category_name != 'All':
             filtered_df = filtered_df[filtered_df['CAT NAME (PT)'] == category_name]
-
-        # ------ size Filter ------
-        size_list = ['All'] + sorted(filtered_df['SIZE'].dropna().unique())
-        if len(size_list)==1:
-            size = False
-            tab5.markdown("""<span style="font-weight: bold; color: red;">Size not applicable</span>""" , unsafe_allow_html=True)
-        else:
-            size = tab5.selectbox("Select Size", size_list)
-
-        if size != 'All' and size != False:
-            filtered_df = filtered_df[filtered_df['SIZE'] == size]
-
-        # ------ Front Rear Filter ------
-        front_rear_list = ["All"]
-        if frame_engine_search == "":
-            front_rear_list = front_rear_list + sorted(filtered_df['F/R'].dropna().unique())
-
-        if len(front_rear_list)==1:
-            front_rear = False
-            tab6.markdown("""<span style="font-weight: bold; color: red;">F/R (Front/Rear) not applicable</span>""" , unsafe_allow_html=True)
-        else:
-            front_rear = tab6.selectbox("Select F/R (Front/Rear)", front_rear_list)
         
-        if front_rear != "All" and front_rear != False:
-            filtered_df = filtered_df[filtered_df['F/R'] == front_rear]
-
-        tab1, tab2, tab3, tab4, tab5, tab6 = st.columns(6)
-        # ------ Left Right Filter ------
-        left_right_list = ["All"]
-        if frame_engine_search == "":
-            left_right_list = left_right_list + sorted(filtered_df['L/R'].dropna().unique())
-
-        if len(left_right_list) == 1:
-            left_right = False
-            tab1.markdown("""<span style="font-weight: bold; color: red;">L/R (Left/Right) not applicable</span>""" , unsafe_allow_html=True)
-        else:
-            left_right = tab1.selectbox("Select L/R (Left/Right)", left_right_list)
-            
+         # ------ engine Filter ------
+        with tab3:
+            frame_engine_search = st.text_input("Enter Frame No./Engine No.")
         
-        if left_right != "All" and left_right != False:
-            filtered_df = filtered_df[filtered_df['L/R'] == left_right]
-
-        # ------ Upper Lover Filter ------
-        upper_lover_list = ["All"]
-        if frame_engine_search == "":
-            upper_lover_list = upper_lover_list + sorted(filtered_df['U/L'].dropna().unique())
-
-        if len(upper_lover_list) == 1:
-            upper_lower = False
-            tab2.markdown("""<span style="font-weight: bold; color: red;">U/L (Upper/Lower) not applicable</span>""" , unsafe_allow_html=True)
-        else:
-            upper_lower = tab2.selectbox("Select U/L (Upper/Lower)", upper_lover_list)
-        
-        if upper_lower != "All" and upper_lower != False:
-            filtered_df = filtered_df[filtered_df['U/L'] == upper_lower]
-
-        # ------ In Out Filter ------
-        in_out_list = ["All"]
-        if frame_engine_search == "":
-            in_out_list = in_out_list + sorted(filtered_df['I/O'].dropna().unique())
-        
-        if len(in_out_list) == 1:
-            in_out = False
-            tab3.markdown("""<span style="font-weight: bold; color: red;">I/O (In/Out)) not applicable</span>""" , unsafe_allow_html=True)
-        else:
-            in_out = tab3.selectbox("Select I/O (In/Out))", in_out_list)
-        
-        if in_out != "All" and in_out != False:
-            filtered_df = filtered_df[filtered_df['I/O'] == in_out]
+        if frame_engine_search:
+            search_text = frame_engine_search.lower().strip()
+            filtered_df = filtered_df[
+                (filtered_df['FRAME'].astype(str).str.lower().str.contains(search_text, na=False)) |
+                (filtered_df['ENGINE'].astype(str).str.lower().str.contains(search_text, na=False))
+            ]
 
         # ------ Car Filter ------
-        car_list = ["All"]
-        if frame_engine_search == "":
-            car_list = car_list + sorted(filtered_df['CAR'].dropna().unique())
-        
-        if len(car_list)==1:
-            selected_car = False
-            tab4.markdown("""<span style="font-weight: bold; color: red;">Car is not applicable</span>""" , unsafe_allow_html=True)
-        else:
-            selected_car = tab4.selectbox("Select Car (CAR)", car_list)
+        car_list = ["All"] + sorted(filtered_df['CAR'].dropna().unique())
+        with tab4:
+            if len(car_list)==1:
+                selected_car = False
+                st.markdown("""<span style="font-weight: bold; color: red;">Car is not applicable</span>""" , unsafe_allow_html=True)
+            else:
+                selected_car = st.selectbox("Select Car (CAR)", car_list)
 
         if selected_car != 'All' and selected_car != False:
             filtered_df = filtered_df[filtered_df['CAR'] == selected_car]
-
+        
         # ------ Car model Filter ------
-        model_list = ["All"]
-        if frame_engine_search == "":
-            model_list = model_list + sorted(filtered_df['MODEL.1'].dropna().unique())
-
-        if len(model_list)==1:
-            selected_model = False
-            tab5.markdown("""<span style="font-weight: bold; color: red;">Car Model is not applicable</span>""" , unsafe_allow_html=True)
-        else:
-            selected_model = tab5.selectbox("Select Model (MODEL)", model_list)
+        model_list = ["All"] + sorted(filtered_df['MODEL.1'].dropna().unique())
+        with tab5:
+            if len(model_list)==1:
+                selected_model = False
+                st.markdown("""<span style="font-weight: bold; color: red;">Car Model is not applicable</span>""" , unsafe_allow_html=True)
+            else:
+                selected_model = st.selectbox("Select Model (MODEL)", model_list)
 
         if selected_model != 'All' and selected_model != False:
             filtered_df = filtered_df[filtered_df['MODEL.1'] == selected_model]
 
         # ------ model Year Filter ------
-        all_years = ["All"]
-        if frame_engine_search == "":
-            all_years = sorted([int(y) for y in set(filtered_df['ANO DE I.'].dropna().unique()) | set(filtered_df['ANO FI.'].dropna().unique())])
+        all_years = sorted([int(y) for y in set(filtered_df['ANO DE I.'].dropna().unique()) | set(filtered_df['ANO FI.'].dropna().unique())])
 
-        if len(all_years) == 1:
-            selected_year = False
-            tab6.markdown("""<span style="font-weight: bold; color: red;">Year is not applicable</span>""" , unsafe_allow_html=True)
-        else:    
-            selected_year = tab6.selectbox("Select Year", ['All'] + all_years)
+        with tab6:
+            if len(all_years) == 1:
+                selected_year = False
+                st.markdown("""<span style="font-weight: bold; color: red;">Year is not applicable</span>""" , unsafe_allow_html=True)
+            else:    
+                selected_year = st.selectbox("Select Year", ['All'] + all_years)
         
         if selected_year != 'All' and selected_year != False:
             filtered_df = filtered_df[
                 (filtered_df['ANO DE I.'] <= selected_year) & 
                 (filtered_df['ANO FI.'] >= selected_year)
             ]
+        
+       
+
+        
+
+        tab1, tab2, tab3, tab4, tab5, tab6 = st.columns(6)
+        # ------ size Filter ------
+        size_list = ['All'] + sorted(filtered_df['SIZE'].dropna().unique())
+
+        with tab1:
+            if len(size_list)==1:
+                size = False
+                st.markdown("""<span style="font-weight: bold; color: red;">Size not applicable</span>""" , unsafe_allow_html=True)
+            else:
+                size = st.selectbox("Select Size", size_list)
+
+        if size != 'All' and size != False:
+            filtered_df = filtered_df[filtered_df['SIZE'] == size]
+
+        # ------ Front Rear Filter ------
+        with tab2:
+            front_rear_list = ["All"]
+            if frame_engine_search == "":
+                front_rear_list = front_rear_list + sorted(filtered_df['F/R'].dropna().unique())
+
+            if len(front_rear_list)==1:
+                front_rear = False
+                st.markdown("""<span style="font-weight: bold; color: red;">F/R (Front/Rear) not applicable</span>""" , unsafe_allow_html=True)
+            else:
+                front_rear = st.selectbox("Select F/R (Front/Rear)", front_rear_list)
+        
+        if front_rear != "All" and front_rear != False:
+            filtered_df = filtered_df[filtered_df['F/R'] == front_rear]
+
+        
+        # ------ Left Right Filter ------
+        with tab3:
+            left_right_list = ["All"]
+            if frame_engine_search == "":
+                left_right_list = left_right_list + sorted(filtered_df['L/R'].dropna().unique())
+
+            if len(left_right_list) == 1:
+                left_right = False
+                st.markdown("""<span style="font-weight: bold; color: red;">L/R (Left/Right) not applicable</span>""" , unsafe_allow_html=True)
+            else:
+                left_right = st.selectbox("Select L/R (Left/Right)", left_right_list)
+            
+        if left_right != "All" and left_right != False:
+            filtered_df = filtered_df[filtered_df['L/R'] == left_right]
+
+        # ------ Upper Lover Filter ------
+        with tab4:
+            upper_lover_list = ["All"]
+            if frame_engine_search == "":
+                upper_lover_list = upper_lover_list + sorted(filtered_df['U/L'].dropna().unique())
+
+            if len(upper_lover_list) == 1:
+                upper_lower = False
+                st.markdown("""<span style="font-weight: bold; color: red;">U/L (Upper/Lower) not applicable</span>""" , unsafe_allow_html=True)
+            else:
+                upper_lower = st.selectbox("Select U/L (Upper/Lower)", upper_lover_list)
+        
+        if upper_lower != "All" and upper_lower != False:
+            filtered_df = filtered_df[filtered_df['U/L'] == upper_lower]
+
+        # ------ In Out Filter ------
+        with tab5:
+            in_out_list = ["All"]
+            if frame_engine_search == "":
+                in_out_list = in_out_list + sorted(filtered_df['I/O'].dropna().unique())
+            
+            if len(in_out_list) == 1:
+                in_out = False
+                st.markdown("""<span style="font-weight: bold; color: red;">I/O (In/Out)) not applicable</span>""" , unsafe_allow_html=True)
+            else:
+                in_out = st.selectbox("Select I/O (In/Out))", in_out_list)
+        
+        if in_out != "All" and in_out != False:
+            filtered_df = filtered_df[filtered_df['I/O'] == in_out]
+
+        # ------ part Filter ------
+        with tab6:
+            if frame_engine_search!="":
+                part_no_search = False
+                st.markdown("""<span style="font-weight: bold; color: red;">Part no not applicable</span>""" , unsafe_allow_html=True)
+            else:
+                part_no_search = st.text_input("Search Part No.")
+
+        if part_no_search:
+            search_text = part_no_search.lower().strip()
+            filtered_df = filtered_df[
+                filtered_df['PART NO.'].astype(str).str.lower().str.contains(search_text, na=False)
+            ]
+
+        
 
         # Filter Group 3: Frame or Engine No.
         # with st.expander("Frame/Engine Search"):
