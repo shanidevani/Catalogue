@@ -18,6 +18,7 @@ LOGIN_CREDENTIALS = {
     "BEIRASASADMIN": "Smart@123456",
     "NAMPULASASADMIN": "Smart@123456",
     "CHEMOIOSASADMIN": "Smart@123456",
+    "Amir": "Amir@111@786",
 }
 
 # --- Login Page Logic ---
@@ -371,5 +372,6 @@ if st.session_state["authenticated"]:
 else:
 
     login_page()
+
 
 
