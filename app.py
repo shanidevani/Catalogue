@@ -18,7 +18,6 @@ LOGIN_CREDENTIALS = {
     "BEIRASASADMIN": "Smart@123456",
     "NAMPULASASADMIN": "Smart@123456",
     "CHEMOIOSASADMIN": "Smart@123456",
-    "Amir": "Amir@111@786",
 }
 
 # --- Login Page Logic ---
@@ -260,6 +259,16 @@ if st.session_state["authenticated"]:
             st.subheader("Filtered Part Numbers:")
             # st.dataframe(filtered_df[['PART NO.','CAT','SIZE','F/R','L/R','U/L','I/O','CAR','MODEL','ANO DE I.','ANO FI.']].reset_index(drop=True), hide_index=True)
             st.dataframe(filtered_df[['PART NO.']].reset_index(drop=True), hide_index=True)
+            st.markdown(
+                """
+                <style>
+                [data-testid="stElementToolbar"] {
+                    display: none;
+                }
+                </style>
+                """,
+                unsafe_allow_html=True
+            )
         else:
             st.warning("No part numbers found with the selected filters.")
     with col2:
@@ -366,12 +375,21 @@ if st.session_state["authenticated"]:
             display_columns = ['part code', 'price', 'duracao', 'description']
             st.dataframe(filtered_df[display_columns], use_container_width=True)
 
+            st.markdown(
+                """
+                <style>
+                [data-testid="stElementToolbar"] {
+                    display: none;
+                }
+                </style>
+                """,
+                unsafe_allow_html=True
+            )
+
             st.markdown("---")
             # --- Logout button at the bottom of the page
 
 else:
 
     login_page()
-
-
 
