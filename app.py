@@ -8,17 +8,18 @@ st.set_page_config(layout="wide")
 
 # --- Login Credentials ---
 LOGIN_CREDENTIALS = {
-    "ARMMACHAWASASADMIN": "Smart@123456",
-    "MATOLASASADMIN": "Smart@123456",
-    "MATOLARIOSASADMIN": "Smart@123456",
-    "MAPUTOSASADMIN": "Smart@123456",
-    "CHOUPALSASADMIN": "Smart@123456",
-    "MACHAWASASADMIN": "Smart@123456",
-    "ARMBEIRASASADMIN": "Smart@123456",
-    "BEIRASASADMIN": "Smart@123456",
-    "NAMPULASASADMIN": "Smart@123456",
-    "CHEMOIOSASADMIN": "Smart@123456",
-    "Amir": "Amir@111@786",
+    # "ARMMACHAWASASADMIN": "Smart@123456",
+    # "MATOLASASADMIN": "Smart@123456",
+    # "MATOLARIOSASADMIN": "Smart@123456",
+    # "MAPUTOSASADMIN": "Smart@123456",
+    # "CHOUPALSASADMIN": "Smart@123456",
+    # "MACHAWASASADMIN": "Smart@123456",
+    # "ARMBEIRASASADMIN": "Smart@123456",
+    # "BEIRASASADMIN": "Smart@123456",
+    # "NAMPULASASADMIN": "Smart@123456",
+    # "CHEMOIOSASADMIN": "Smart@123456",
+    # "Amir": "Amir@111@786",
+    "Admin": "admin",
 }
 
 # --- Login Page Logic ---
@@ -393,5 +394,6 @@ if st.session_state["authenticated"]:
 else:
 
     login_page()
+
 
 
